@@ -59,7 +59,6 @@ void my_main() {
   zbuffer zb;
   color g;
   double step_3d = 20;
-  double theta;
 
   //Lighting values here for easy access
   color ambient;
@@ -187,8 +186,10 @@ void my_main() {
                       view, light, ambient, reflect);
         polygons->lastcol = 0;
         break;
+      default:
+        printf("%d\n", op[i].opcode);
     }
 
-    // printf("\n");
+    printf("stack size: %d\n", systems->size);
   }
 }
