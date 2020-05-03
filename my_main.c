@@ -172,8 +172,17 @@ void my_main() {
                       view, light, ambient, reflect);
         polygons->lastcol = 0;
         break;
+      case SPHERE:
+        add_sphere(polygons, op[i].op.sphere.d[0], op[i].op.sphere.d[1], op[i].op.sphere.d[2],
+                    op[i].op.sphere.r, step_3d);
+        if (op[i].op.torus.constants)
+          reflect = op[i].op.sphere.constants->s.c;
+        else
+          reflect = &white;
+        polygons->lastcol = 0;
+        break;
     }
 
-    printf("\n");
+    // printf("\n");
   }
 }
