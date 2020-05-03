@@ -130,6 +130,12 @@ void my_main() {
         matrix_mult(peek(systems), tmp);
         copy_matrix(tmp, peek(systems));
         break;
+      case SCALE:
+        tmp = make_scale(op[i].op.scale.d[0], op[i].op.scale.d[1], op[i].op.scale.d[2]);
+        matrix_mult(peek(systems), tmp);
+        copy_matrix(tmp, peek(systems));
+        break;
+      
     }
 
     printf("\n");
