@@ -117,6 +117,8 @@ void my_main() {
       case POP:
         pop(systems);
         break;
+      case SAVE:
+        save_extension(t, op[i].op.save.p->name);
       case MOVE:
         tmp = make_translate(op[i].op.move.d[0], op[i].op.move.d[1], op[i].op.move.d[2]);
         matrix_mult(peek(systems), tmp);
