@@ -179,6 +179,8 @@ void my_main() {
           reflect = op[i].op.sphere.constants->s.c;
         else
           reflect = &white;
+        draw_polygons(polygons, t, zb,
+                      view, light, ambient, reflect);
         polygons->lastcol = 0;
         break;
     }
