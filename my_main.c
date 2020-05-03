@@ -131,13 +131,13 @@ void my_main() {
         printf("rotating\n");
         switch (op[i].op.rotate.axis) {
           case 0:
-            tmp = make_rotX(op[i].op.rotate.degrees);
+            tmp = make_rotX(op[i].op.rotate.degrees * (M_PI/180));
             break;
           case 1:
-            tmp = make_rotY(op[i].op.rotate.degrees);
+            tmp = make_rotY(op[i].op.rotate.degrees * (M_PI/180));
             break;
           case 2:
-            tmp = make_rotZ(op[i].op.rotate.degrees);
+            tmp = make_rotZ(op[i].op.rotate.degrees * (M_PI/180));
             break;
         }
         matrix_mult(peek(systems), tmp);
@@ -190,6 +190,5 @@ void my_main() {
         printf("%d\n", op[i].opcode);
     }
 
-    printf("stack size: %d\n", systems->size);
   }
 }
