@@ -187,6 +187,9 @@ void my_main() {
                       view, light, ambient, reflect);
         polygons->lastcol = 0;
         break;
+      case DISPLAY:
+        display(t);
+      break;
       // default:
         // printf("%d\n", op[i].opcode);
     }
