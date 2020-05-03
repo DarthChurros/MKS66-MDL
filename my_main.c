@@ -178,6 +178,7 @@ void my_main() {
         printf("making sphere\n");
         add_sphere(polygons, op[i].op.sphere.d[0], op[i].op.sphere.d[1], op[i].op.sphere.d[2],
                     op[i].op.sphere.r, step_3d);
+        matrix_mult(peek(systems), polygons);
         if (op[i].op.torus.constants)
           reflect = op[i].op.sphere.constants->s.c;
         else
