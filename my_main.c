@@ -53,6 +53,7 @@ void my_main() {
 
   int i;
   struct matrix *tmp;
+  struct matrix *polygons;
   struct stack *systems;
   screen t;
   zbuffer zb;
@@ -99,7 +100,7 @@ void my_main() {
   reflect = &white;
 
   systems = new_stack();
-  tmp = new_matrix(4, 1000);
+  polygons = new_matrix(4, 1000);
   clear_screen( t );
   clear_zbuffer(zb);
   g.red = 0;
@@ -138,7 +139,13 @@ void my_main() {
         matrix_mult(peek(systems), tmp);
         copy_matrix(tmp, peek(systems));
         break;
-
+      case BOX:
+        add_box(polygons, op[i].op.box.d0[0], op[i].op.box.d0[1], op[i].op.box.d0[2], op[i].op.box.d1[0], op[i].op.box.d1[1], op[i].op.box.d1[2]);
+        matrix_mult(peek(systems), polygons);
+        draw_polygons(polygons, t, zb,
+                      view, light, ambient,
+                      op[i].op.box.constants->s.c);
+        break;
     }
 
     printf("\n");
