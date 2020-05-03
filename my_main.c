@@ -109,7 +109,15 @@ void my_main() {
   print_symtab();
   for (i=0;i<lastop;i++) {
 
-    printf("%d: ",i);
+    switch (op[i].opcode) {
+      case PUSH:
+        push(systems);
+        break;
+      case MOVE:
+        tmp = make_translate(op[i].op.move.d[0], op[i].op.move.d[1], op[i].op.move.d[2]);
+        matrix_mult(peek(systems), tmp);
+        copy_matrix(tmp, peek(systems));
+    }
 
     printf("\n");
   }
