@@ -85,7 +85,7 @@ struct command
       SYMTAB *p;
     } scale;
     struct {
-      double axis;
+      int axis;
       double degrees;
       SYMTAB *p;
     } rotate;
