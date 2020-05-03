@@ -117,6 +117,19 @@ void my_main() {
         tmp = make_translate(op[i].op.move.d[0], op[i].op.move.d[1], op[i].op.move.d[2]);
         matrix_mult(peek(systems), tmp);
         copy_matrix(tmp, peek(systems));
+        break;
+      case ROTATE:
+        switch (op[i].op.rotate.axis) {
+          case 0:
+            tmp = make_rotX(op[i].op.rotate.degrees);
+          case 1:
+            tmp = make_rotY(op[i].op.rotate.degrees);
+          case 2:
+            tmp = make_rotZ(op[i].op.rotate.degrees);
+        }
+        matrix_mult(peek(systems), tmp);
+        copy_matrix(tmp, peek(systems));
+        break;
     }
 
     printf("\n");
