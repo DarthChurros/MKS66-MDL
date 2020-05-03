@@ -112,24 +112,24 @@ void my_main() {
 
     switch (op[i].opcode) {
       case PUSH:
-        printf("pushing\n");
+        // printf("pushing\n");
         push(systems);
         break;
       case POP:
-        printf("popping\n");
+        // printf("popping\n");
         pop(systems);
         break;
       case SAVE:
-        printf("saving\n");
+        // printf("saving\n");
         save_extension(t, op[i].op.save.p->name);
       case MOVE:
-        printf("moving\n");
+        // printf("moving\n");
         tmp = make_translate(op[i].op.move.d[0], op[i].op.move.d[1], op[i].op.move.d[2]);
         matrix_mult(peek(systems), tmp);
         copy_matrix(tmp, peek(systems));
         break;
       case ROTATE:
-        printf("rotating\n");
+        // printf("rotating\n");
         switch (op[i].op.rotate.axis) {
           case 0:
             tmp = make_rotX(op[i].op.rotate.degrees);
@@ -142,18 +142,32 @@ void my_main() {
         copy_matrix(tmp, peek(systems));
         break;
       case SCALE:
-        printf("scaling\n");
+        // printf("scaling\n");
         tmp = make_scale(op[i].op.scale.d[0], op[i].op.scale.d[1], op[i].op.scale.d[2]);
         matrix_mult(peek(systems), tmp);
         copy_matrix(tmp, peek(systems));
         break;
       case BOX:
-        printf("making box\n");
+        // printf("making box\n");
         add_box(polygons, op[i].op.box.d0[0], op[i].op.box.d0[1], op[i].op.box.d0[2], op[i].op.box.d1[0], op[i].op.box.d1[1], op[i].op.box.d1[2]);
         matrix_mult(peek(systems), polygons);
         if (op[i].op.box.constants)
           reflect = op[i].op.box.constants->s.c;
-        reflect = &white;
+        else
+          reflect = &white;
+        draw_polygons(polygons, t, zb,
+                      view, light, ambient, reflect);
+        polygons->lastcol = 0;
+        break;
+      case TORUS:
+        // printf("making torus\n");
+        add_torus(polygons, op[i].op.torus.d[0], op[i].op.torus.d[1], op[i].op.torus.d[2],
+                  op[i].op.torus.r0, op[i].op.torus.r1, step_3d);
+        matrix_mult(peek(systems), polygons);
+        if (op[i].op.torus.constants)
+          reflect = op[i].op.torus.constants->s.c;
+        else
+          reflect = &white;
         draw_polygons(polygons, t, zb,
                       view, light, ambient, reflect);
         polygons->lastcol = 0;
