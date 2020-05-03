@@ -113,6 +113,9 @@ void my_main() {
       case PUSH:
         push(systems);
         break;
+      case POP:
+        pop(systems);
+        break;
       case MOVE:
         tmp = make_translate(op[i].op.move.d[0], op[i].op.move.d[1], op[i].op.move.d[2]);
         matrix_mult(peek(systems), tmp);
@@ -135,7 +138,7 @@ void my_main() {
         matrix_mult(peek(systems), tmp);
         copy_matrix(tmp, peek(systems));
         break;
-      
+
     }
 
     printf("\n");
