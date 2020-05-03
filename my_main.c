@@ -112,19 +112,24 @@ void my_main() {
 
     switch (op[i].opcode) {
       case PUSH:
+        printf("pushing\n");
         push(systems);
         break;
       case POP:
+        printf("popping\n");
         pop(systems);
         break;
       case SAVE:
+        printf("saving\n");
         save_extension(t, op[i].op.save.p->name);
       case MOVE:
+        printf("moving\n");
         tmp = make_translate(op[i].op.move.d[0], op[i].op.move.d[1], op[i].op.move.d[2]);
         matrix_mult(peek(systems), tmp);
         copy_matrix(tmp, peek(systems));
         break;
       case ROTATE:
+        printf("rotating\n");
         switch (op[i].op.rotate.axis) {
           case 0:
             tmp = make_rotX(op[i].op.rotate.degrees);
@@ -137,16 +142,21 @@ void my_main() {
         copy_matrix(tmp, peek(systems));
         break;
       case SCALE:
+        printf("scaling\n");
         tmp = make_scale(op[i].op.scale.d[0], op[i].op.scale.d[1], op[i].op.scale.d[2]);
         matrix_mult(peek(systems), tmp);
         copy_matrix(tmp, peek(systems));
         break;
       case BOX:
+        printf("making box\n");
         add_box(polygons, op[i].op.box.d0[0], op[i].op.box.d0[1], op[i].op.box.d0[2], op[i].op.box.d1[0], op[i].op.box.d1[1], op[i].op.box.d1[2]);
         matrix_mult(peek(systems), polygons);
+        if (op[i].op.box.constants)
+          reflect = op[i].op.box.constants->s.c;
+        reflect = &white;
         draw_polygons(polygons, t, zb,
-                      view, light, ambient,
-                      op[i].op.box.constants->s.c);
+                      view, light, ambient, reflect);
+        polygons->lastcol = 0;
         break;
     }
 
