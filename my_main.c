@@ -58,7 +58,7 @@ void my_main() {
   screen t;
   zbuffer zb;
   color g;
-  double step_3d = 1000;
+  double step_3d = 100;
 
   //Lighting values here for easy access
   color ambient;
@@ -111,24 +111,24 @@ void my_main() {
 
     switch (op[i].opcode) {
       case PUSH:
-        printf("pushing\n");
+        // printf("pushing\n");
         push(systems);
         break;
       case POP:
-        printf("popping\n");
+        // printf("popping\n");
         pop(systems);
         break;
       case SAVE:
-        printf("saving\n");
+        // printf("saving\n");
         save_extension(t, op[i].op.save.p->name);
       case MOVE:
-        printf("moving\n");
+        // printf("moving\n");
         tmp = make_translate(op[i].op.move.d[0], op[i].op.move.d[1], op[i].op.move.d[2]);
         matrix_mult(peek(systems), tmp);
         copy_matrix(tmp, peek(systems));
         break;
       case ROTATE:
-        printf("rotating\n");
+        // printf("rotating\n");
         switch (op[i].op.rotate.axis) {
           case 0:
             tmp = make_rotX(op[i].op.rotate.degrees * (M_PI/180));
@@ -144,13 +144,13 @@ void my_main() {
         copy_matrix(tmp, peek(systems));
         break;
       case SCALE:
-        printf("scaling\n");
+        // printf("scaling\n");
         tmp = make_scale(op[i].op.scale.d[0], op[i].op.scale.d[1], op[i].op.scale.d[2]);
         matrix_mult(peek(systems), tmp);
         copy_matrix(tmp, peek(systems));
         break;
       case BOX:
-        printf("making box\n");
+        // printf("making box\n");
         add_box(polygons, op[i].op.box.d0[0], op[i].op.box.d0[1], op[i].op.box.d0[2], op[i].op.box.d1[0], op[i].op.box.d1[1], op[i].op.box.d1[2]);
         matrix_mult(peek(systems), polygons);
         if (op[i].op.box.constants)
@@ -162,7 +162,7 @@ void my_main() {
         polygons->lastcol = 0;
         break;
       case TORUS:
-        printf("making torus\n");
+        // printf("making torus\n");
         add_torus(polygons, op[i].op.torus.d[0], op[i].op.torus.d[1], op[i].op.torus.d[2],
                   op[i].op.torus.r0, op[i].op.torus.r1, step_3d);
         matrix_mult(peek(systems), polygons);
@@ -175,7 +175,7 @@ void my_main() {
         polygons->lastcol = 0;
         break;
       case SPHERE:
-        printf("making sphere\n");
+        // printf("making sphere\n");
         add_sphere(polygons, op[i].op.sphere.d[0], op[i].op.sphere.d[1], op[i].op.sphere.d[2],
                     op[i].op.sphere.r, step_3d);
         matrix_mult(peek(systems), polygons);
@@ -187,8 +187,8 @@ void my_main() {
                       view, light, ambient, reflect);
         polygons->lastcol = 0;
         break;
-      default:
-        printf("%d\n", op[i].opcode);
+      // default:
+        // printf("%d\n", op[i].opcode);
     }
 
   }
